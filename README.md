@@ -1,11 +1,10 @@
-# Rule-based lead classification from customer chats
+# Lead classification from sales chats
 
 The sales team had hundreds of chats to get through every day, and no quick way to tell who was serious about buying. I built a rule-based classifier that sorted those chats by buying intent, so agents knew who to call first.
 
 **At a glance**
 
 - 28K+ chats tagged over five months, with the classifier running several times a day.
-- Each run pushed high-intent leads into a Google Sheet, so agents always had a fresh list to work from.
 - Called first, high-intent leads converted 3 to nearly 9× better than the other tiers. About a quarter of qualified leads brought around 60% of their sales.
 - Conversion rose from 1% to 4% in four months.
 - Fewer than 0.1% of chats tagged irrelevant ever led to a sale.
@@ -49,7 +48,7 @@ The classifier gives every chat a tag, a sub-label, a confidence level and a one
 
 Sales used the tag to decide who to call. Marketing used the sub-label to see why leads were lost, for example whether "can't afford" was growing. No response became its own number, so for the first time you could see how many people sent the pre-typed message and stopped there.
 
-Payment is kept as a separate flag, so a chat can be high intent and paid at the same time. Each chat also records whether an agent replied and how fast, and a gender guessed from name and email, because sales prioritised women.
+Payment is kept as a separate flag, so a chat can be high intent and paid at the same time. Each chat also records whether an agent replied and how fast.
 
 ![How a chat moves through the tagging pipeline](assets/pipeline.png)
 
@@ -81,9 +80,7 @@ The full walkthrough is in [`model/method.md`](model/method.md).
 
 ## What I tracked
 
-Each month, for each course, I followed leads from first message to sale: how many replied and how many only sent the pre-typed message, how chats split across tags and intent tiers, and which groups actually bought. That last part mattered most, because it checked the tags against real sales rather than my own judgment. I also tracked the same figures by gender, and how quickly agents replied.
-
-Day to day, I kept a summary row for every run so any day could be compared with the next, an error log for chats that couldn't be pulled, and the rule-change log: what changed, why, and which chat caused it.
+Each month, for each course, I followed leads from first message to sale: how chats split across tags and intent tiers, and which groups actually bought. That checked the tags against real sales rather than my own judgment.
 
 ---
 
@@ -105,17 +102,6 @@ The tagging changed how agents spent their day. Instead of working through the i
 
 - **Accuracy.** The rules were checked against hand-tagged chats, but never on a separate test set. Next would be a labelled test set, precision and recall for each tag, and a side-by-side with an AI classifier.
 - **Future leads.** On the main course they converted at 8.1%, higher than qualified leads. Either next-year students were signing up on schedule, or the "next year" rules were catching students who were ready now.
-- **Gender.** It's guessed from name and email only, and 27–37% of qualified leads came out unknown.
-
----
-
-## Takeaways
-
-The order of the rules is the design. Trusting the agent first, and only counting "not interested" at the end of a chat, removed whole groups of mistakes.
-
-Keep what was said separate from what happened. Payment has its own flag and each day's tag is fixed, so tags stay about intent and don't drift.
-
-Log every rule change with the chat that caused it. It kept the rules easy to explain, and made re-running history safe.
 
 ---
 
@@ -125,6 +111,8 @@ Log every rule change with the chat that caused it. It kept the rules easy to ex
 - **Python** for the rule ladder, the ranking, and keeping one row per student
 - **Chatwoot API** for pulling full chat threads, page by page, so long chats weren't cut off
 - **Google Sheets** for getting high-intent leads to agents during the day
+
+The code isn't included here because it belongs to the company.
 
 ---
 

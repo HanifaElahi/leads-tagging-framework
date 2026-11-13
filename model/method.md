@@ -2,7 +2,7 @@
 
 *How each chat is tagged, how the strongest leads are found, and how the rules got better over time.*
 
-The question was simple: looking at today's chats, who should we call first? Agents had to open every chat to find the serious students, so those students waited behind everyone else. The [README](../README.md) has the full background. This covers how the tagging works.
+The [README](../README.md) has the background and the results. This covers how the tagging works, step by step.
 
 ![How a chat moves through the tagging pipeline](../assets/pipeline.png)
 
@@ -10,7 +10,7 @@ The question was simple: looking at today's chats, who should we call first? Age
 
 ## What each chat gets
 
-Each chat gets a tag, a sub-label, a confidence level and a one-line reason. The buckets are:
+Each chat gets a tag, a sub-label, a confidence level and a one-line reason. The tags are:
 
 | Tag | Means | Sub-labels |
 | --- | --- | --- |
@@ -19,9 +19,9 @@ Each chat gets a tag, a sub-label, a confidence level and a one-line reason. The
 | Irrelevant | Not a lead for this course | Agent flagged, wrong exam, spam, no answer on call, general |
 | Future lead | A real student, but for a later exam year | |
 
-- **Sales** uses the bucket to decide who to call.
+- **Sales** uses the tag to decide who to call.
 - **Marketing** uses the sub-label to see why leads were lost, for example whether "can't afford" is growing.
-- **Payment** is kept as a separate flag, not a bucket, so a chat can be high intent and paid at the same time.
+- **Payment** is kept as a separate flag, not a tag, so a chat can be high intent and paid at the same time.
 
 ---
 
@@ -91,8 +91,6 @@ In practice, a chat is set aside for one of six reasons:
 
 "Not this year" becomes a future lead; the rest are tagged no response or irrelevant.
 
-Everyone else goes on to be ranked.
-
 ---
 
 ## Step 3: Ranking the lead
@@ -110,7 +108,7 @@ A chat that's only "ok", "yes" or menu taps isn't a lead, however many messages 
 **3. What they ask matters more than how much they say.**
 One question about fees or how to pay outranks a long chat that never gets there.
 
-Each lead then lands in one of five tiers:
+Each chat then lands in one of four tiers, or turns out not to be a lead:
 
 | Tier | Example |
 | --- | --- |
@@ -155,8 +153,6 @@ A few examples:
 
 ## How it runs
 
-It runs in two loops.
-
 **During the day**, several times:
 
 - Pull today's chats and tag them.
@@ -179,7 +175,7 @@ The rules were checked against hand-tagged chats, but not on a separate test set
 
 New wording, missing context, sarcasm, images and voice notes can all lead to a wrong tag.
 
-The next step is a labelled test set: measure precision and recall for each bucket, and compare the rules against an AI classifier on the same chats.
+The next step is a labelled test set: measure precision and recall for each tag, and compare the rules against an AI classifier on the same chats.
 
 ---
 
